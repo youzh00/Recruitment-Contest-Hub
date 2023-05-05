@@ -14,7 +14,7 @@ public class User extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_seq")
-    @SequenceGenerator(name = "user_id_seq", sequenceName = "course_id_seq", allocationSize = 1)
+    @SequenceGenerator(name = "user_id_seq", sequenceName = "user_id_seq", allocationSize = 1)
     private int userId;
 
     @NotBlank(message="Name must not be blank")
@@ -41,9 +41,9 @@ public class User extends BaseEntity{
     private Date birthDay;
 
     @Enumerated(EnumType.STRING)
-    public Type type;
+    public Roles role;
 
-    public enum Type{
+    public enum Roles{
         USER, ADMIN
     }
 
