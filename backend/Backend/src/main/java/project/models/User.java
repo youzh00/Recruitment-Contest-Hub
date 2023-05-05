@@ -13,8 +13,8 @@ import java.util.Date;
 public class User extends BaseEntity{
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO,generator="native")
-    @GenericGenerator(name = "native",strategy = "native")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_seq")
+    @SequenceGenerator(name = "user_id_seq", sequenceName = "course_id_seq", allocationSize = 1)
     private int userId;
 
     @NotBlank(message="Name must not be blank")
