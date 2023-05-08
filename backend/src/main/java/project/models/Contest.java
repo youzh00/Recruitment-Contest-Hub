@@ -3,7 +3,9 @@ package project.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
 
+@Data
 @Entity
 public class Contest extends BaseEntity{
 

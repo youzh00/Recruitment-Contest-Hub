@@ -3,10 +3,9 @@ package project.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-public class Submissions extends BaseEntity{
+public class Submission extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "submissions_id_seq")
