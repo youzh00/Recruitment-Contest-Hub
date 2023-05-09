@@ -4,16 +4,18 @@ package project.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
-public class Contest extends BaseEntity{
+public class Contest extends BaseEntity {
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contest_id_seq")
     @SequenceGenerator(name = "contest_id_seq", sequenceName = "contest_id_seq", allocationSize = 1)
-    private int contestId;
+    private Long id;
 
     @NotBlank(message = "School name must not be blank ")
     private String schoolName;
@@ -30,7 +32,7 @@ public class Contest extends BaseEntity{
     @Enumerated(EnumType.STRING)
     public ContestType type;
 
-    public enum ContestType{
+    public enum ContestType {
         MASTER, DOCTORA, PREPARTOIRE
     }
 

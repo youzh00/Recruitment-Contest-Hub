@@ -7,12 +7,12 @@ import lombok.Data;
 
 @Data
 @Entity
-public class QuestionOption extends BaseEntity{
+public class QuestionOption extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contest_id_seq")
     @SequenceGenerator(name = "contest_id_seq", sequenceName = "contest_id_seq", allocationSize = 1)
-    private int questionOptionId;
+    private Long id;
 
 
     @NotBlank(message = "Question Option must not be blank ")
@@ -20,4 +20,16 @@ public class QuestionOption extends BaseEntity{
 
     @NotBlank(message = "The correctness of the answer must not be blank ")
     private boolean isCorrect;
+
+
+    @ManyToOne
+    @JoinColumn(
+            name = "question_id",
+            referencedColumnName = "id",
+            nullable = false,
+            foreignKey = @ForeignKey(
+                    name = "question_option_question_id_fkey"
+            )
+    )
+    private Question question;
 }
