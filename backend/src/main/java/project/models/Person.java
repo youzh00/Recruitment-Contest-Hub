@@ -2,18 +2,23 @@ package project.models;
 
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
+@NoArgsConstructor
 @Entity(name = "Person")
 @Table(
         name = "person",
         uniqueConstraints = {
-                @UniqueConstraint(name = "person_email_key", columnNames = "email"),
-                @UniqueConstraint(name = "person_mobile_number_key", columnNames = "mobileNumber")
+                @UniqueConstraint(name = "person_email_key", columnNames = "email")
+                //@UniqueConstraint(name = "person_mobile_number_key", columnNames = "mobileNumber")
         }
 )
 public class Person extends BaseEntity {
@@ -27,9 +32,9 @@ public class Person extends BaseEntity {
     @Size(min = 3, message = "Name must be at least 3 characters long")
     private String name;
 
-    @NotBlank(message = "Mobile number must not be blank")
-    @Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile number must be 10 digits")
-    private String mobileNumber;
+    //@NotBlank(message = "Mobile number must not be blank")
+    //@Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile number must be 10 digits")
+    //private String mobileNumber;
 
     @NotBlank(message = "Email must not be blank")
     @Email(message = "Please provide a valid email address")
@@ -39,19 +44,20 @@ public class Person extends BaseEntity {
     @Size(min = 5, message = "Password must be at least 5 characters long")
     private String pwd;
 
-    @NotBlank(message = "CIN must not be blank")
-    private String cin;
+    // @NotBlank(message = "CIN must not be blank")
+    //private String cin;
 
-    @NotBlank(message = "Date of birth must not be blank")
-    @Past
-    private Date birthDay;
 
-    @Enumerated(EnumType.STRING)
-    public Role role;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
 
-    public enum Role {
-        USER, ADMIN
+    public Person(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.pwd = password;
     }
-
 
 }
