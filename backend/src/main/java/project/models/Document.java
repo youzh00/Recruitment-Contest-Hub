@@ -3,10 +3,14 @@ package project.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
-@Data
+@Builder
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class Document extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contest_id_seq")
@@ -42,13 +46,13 @@ public class Document extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(
-            name = "submission_id",
+            name = "registration_id",
             referencedColumnName = "id",
             nullable = false,
             foreignKey = @ForeignKey(
-                    name = "document_submission_id_fkey"
+                    name = "document_registration_id_fkey"
             )
     )
-    private Submission submission;
+    private ContestRegistration contestRegistration;
 
 }

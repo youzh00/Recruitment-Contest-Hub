@@ -3,12 +3,14 @@ package project.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
-@EqualsAndHashCode(callSuper = true)
-@Data
+@Builder
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class Contest extends BaseEntity {
 
 
