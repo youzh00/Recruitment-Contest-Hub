@@ -1,10 +1,13 @@
 package project.controllers;
 
 
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.models.Contest;
 import project.models.Question;
-import project.models.Submission;
+import project.services.ContestService;
 
 import java.util.List;
 
@@ -20,8 +23,9 @@ public class ContestController {
     }
 
     @PostMapping
-    public Contest createContest(@RequestBody Contest contest) {
-        return contestService.createContest(contest);
+    public ResponseEntity<Contest> createContest(@Valid @RequestBody Contest contest) {
+        Contest savedContest = contestService.createContest(contest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedContest);
     }
 
     // Retrieve all contests
@@ -38,7 +42,7 @@ public class ContestController {
 
     // Update a specific contest by ID
     @PutMapping("/{id}")
-    public Contest updateContestById(@PathVariable Long id, @RequestBody Contest contest) {
+    public Contest updateContestById(@PathVariable Long id, @Valid @RequestBody Contest contest) {
         return contestService.updateContestById(id, contest);
     }
 

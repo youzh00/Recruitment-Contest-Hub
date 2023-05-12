@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Response {
+public class Response extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "response_id_seq")
     @SequenceGenerator(name = "response_id_seq", sequenceName = "response_id_seq", allocationSize = 1)
