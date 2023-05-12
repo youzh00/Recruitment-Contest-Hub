@@ -1,4 +1,4 @@
-package project.security;
+package project.config;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
