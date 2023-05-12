@@ -4,6 +4,7 @@ package project.controllers;
 import org.springframework.web.bind.annotation.*;
 import project.models.Person;
 import project.models.Registration;
+import project.services.PersonService;
 
 import java.util.List;
 
@@ -59,8 +60,8 @@ public class PersonController {
     }
 
     // Delete a person's registration for a specific contest by ID
-    @DeleteMapping("/{personId}/registrations/{contestId}")
-    public void deleteRegistrationForPerson(@PathVariable Long personId, @PathVariable Long contestId) {
-        personService.deleteRegistrationForPerson(personId, contestId);
+    @DeleteMapping("/{personId}/registrations/{registrationId}")
+    public void deleteRegistrationForPerson(@PathVariable("personId") Long personId, @PathVariable("registrationId") Long registrationId) {
+        personService.deleteRegistrationForPerson(personId, registrationId);
     }
 }

@@ -3,14 +3,17 @@ package project.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-@Builder
-@Entity
+
+@Data
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class Response {
+@Entity
+public class Response extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "response_id_seq")
     @SequenceGenerator(name = "response_id_seq", sequenceName = "response_id_seq", allocationSize = 1)

@@ -4,7 +4,6 @@ package project.controllers;
 import org.springframework.web.bind.annotation.*;
 import project.models.Contest;
 import project.models.Question;
-import project.models.Submission;
 
 import java.util.List;
 

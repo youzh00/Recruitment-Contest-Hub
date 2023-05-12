@@ -7,13 +7,17 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-@Builder
+@Data
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "Person")
@@ -57,10 +61,40 @@ public class Person extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    public Person(String name, String email, String password) {
+
+    @OneToMany(
+            mappedBy = "person",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Registration> registrations = new ArrayList<>();
+
+    public Person(String name, String email, String pwd, String mobileNumber, String cin) {
         this.name = name;
         this.email = email;
-        this.pwd = password;
+        this.pwd = pwd;
+        this.mobileNumber = mobileNumber;
+        this.cin = cin;
+    }
+
+    public Registration addRegistration(Registration registration) {
+        registrations.add(registration);
+        return registration;
+    }
+
+    public void removeRegistration(Long registrationId) {
+
+        int targetIndex = -1;
+        for (int i = 0; i < registrations.size(); i++) {
+            if (registrations.get(i).getId().equals(registrationId)) {
+                targetIndex = i;
+                break;
+            }
+        }
+
+        if (targetIndex != -1) {
+            registrations.remove(targetIndex);
+        }
     }
 
 }
