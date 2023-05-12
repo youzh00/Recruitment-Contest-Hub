@@ -3,13 +3,20 @@ package project.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
+@Builder
 @Entity
-public class Submission extends BaseEntity {
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "registration")
+public class ContestRegistration extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "submissions_id_seq")
-    @SequenceGenerator(name = "submissions_id_seq", sequenceName = "submissions_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "registration_id_seq")
+    @SequenceGenerator(name = "registration_id_seq", sequenceName = "registration_id_seq", allocationSize = 1)
     private Long id;
 
     @NotBlank(message = "First bac grade must not be blank ")
@@ -26,7 +33,7 @@ public class Submission extends BaseEntity {
             referencedColumnName = "id",
             nullable = false,
             foreignKey = @ForeignKey(
-                    name = "submission_person_id_fkey"
+                    name = "registration_person_id_fkey"
             )
     )
     private Person person;
@@ -36,7 +43,7 @@ public class Submission extends BaseEntity {
             referencedColumnName = "id",
             nullable = false,
             foreignKey = @ForeignKey(
-                    name = "submission_contest_id_fkey"
+                    name = "registration_contest_id_fkey"
             )
     )
     private Contest contest;
