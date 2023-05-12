@@ -2,12 +2,12 @@ package project.services;
 
 
 import org.springframework.stereotype.Service;
+import project.exceptions.ResourceNotFoundException;
 import project.models.Contest;
 import project.repositories.ContestRepository;
 import project.repositories.PersonRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ContestService {
@@ -31,11 +31,13 @@ public class ContestService {
     }
 
     public Contest updateContestById(Long id, Contest contest) {
-        Optional<Contest> optionalContest = contestRepository.findById(id);
+        Contest updatedContest = contestRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Profile not found"));
 
-        if (optionalContest.isPresent()) {
-            Contest updatedContest = optionalContest.get();
+        updatedContest.setDeadline(contest.getDeadline());
+        updatedContest.setType(contest.getType());
+        updatedContest.setDuration(contest.getDuration());
+        updatedContest.setStartingTime(contest.getStartingTime());
 
-        }
+        return contestRepository.save(updatedContest);
     }
 }
