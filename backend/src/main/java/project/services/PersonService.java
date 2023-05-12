@@ -1,7 +1,9 @@
 package project.services;
 
 import org.springframework.stereotype.Service;
+import project.models.Contest;
 import project.models.Person;
+import project.models.Registration;
 import project.repositories.ContestRepository;
 import project.repositories.PersonRepository;
 

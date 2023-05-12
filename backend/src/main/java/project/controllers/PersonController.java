@@ -3,6 +3,7 @@ package project.controllers;
 
 import org.springframework.web.bind.annotation.*;
 import project.models.Person;
+import project.models.Registration;
 
 import java.util.List;
 
