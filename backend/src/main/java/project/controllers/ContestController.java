@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.models.Contest;
 import project.models.Question;
+import project.models.Registration;
 import project.services.ContestService;
 
 import java.util.List;

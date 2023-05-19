@@ -4,6 +4,7 @@ package project.services;
 import org.springframework.stereotype.Service;
 import project.exceptions.ResourceNotFoundException;
 import project.models.Contest;
+import project.models.Registration;
 import project.repositories.ContestRepository;
 import project.repositories.PersonRepository;
 
@@ -31,7 +32,7 @@ public class ContestService {
     }
 
     public Contest updateContestById(Long id, Contest contest) {
-        Contest updatedContest = contestRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Profile not found"));
+        Contest updatedContest = contestRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Contest not found"));
 
         updatedContest.setDeadline(contest.getDeadline());
         updatedContest.setType(contest.getType());
@@ -39,5 +40,19 @@ public class ContestService {
         updatedContest.setStartingTime(contest.getStartingTime());
 
         return contestRepository.save(updatedContest);
+    }
+
+    public Contest getContestById(Long id) {
+        Contest contest = contestRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Contest not found"));
+
+        return contest;
+    }
+
+    public void deleteContestById(Long id) {
+        contestRepository.deleteById(id);
+    }
+
+    public List<Registration> getRegistrationsForContest(Long id) {
+        List<Registration> registrations=contestRepository.get
     }
 }
