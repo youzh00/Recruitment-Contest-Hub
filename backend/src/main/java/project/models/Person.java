@@ -49,7 +49,7 @@ public class Person extends BaseEntity {
 
     @NotBlank(message = "Password must not be blank")
     @Size(min = 5, message = "Password must be at least 5 characters long")
-    private String pwd;
+    private String password;
 
     @NotBlank(message = "CIN must not be blank")
     private String cin;
@@ -69,10 +69,10 @@ public class Person extends BaseEntity {
     )
     private List<Registration> registrations = new ArrayList<>();
 
-    public Person(String name, String email, String pwd, String mobileNumber, String cin) {
+    public Person(String name, String email, String password, String mobileNumber, String cin) {
         this.name = name;
         this.email = email;
-        this.pwd = pwd;
+        this.password = password;
         this.mobileNumber = mobileNumber;
         this.cin = cin;
     }

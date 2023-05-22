@@ -2,7 +2,6 @@ package project.security.service;
 
 
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,16 +11,18 @@ import project.repositories.PersonRepository;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-    @Autowired
-    PersonRepository personRepository;
+    private final PersonRepository personRepository;
+
+    public UserDetailsServiceImpl(PersonRepository personRepository) {
+        this.personRepository = personRepository;
+    }
 
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-        Person person = personRepository.findByName(name)
-                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + name));
+    public UserDetails loadUserByUsername(String personName) throws UsernameNotFoundException {
+        Person person = personRepository.findByName(personName)
+                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with personName: " + personName));
 
         return UserDetailsImpl.build(person);
     }
-
 }
