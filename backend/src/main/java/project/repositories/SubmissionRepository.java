@@ -2,8 +2,8 @@ package project.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import project.models.ContestRegistration;
+import project.models.Registration;
 
 @Repository
-public interface SubmissionRepository extends JpaRepository<ContestRegistration, Long> {
+public interface SubmissionRepository extends JpaRepository<Registration, Long> {
 }

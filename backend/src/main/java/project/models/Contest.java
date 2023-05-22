@@ -8,6 +8,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
@@ -35,6 +38,28 @@ public class Contest extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     public ContestType type;
+
+
+    @OneToMany(
+            mappedBy = "contest",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Registration> registrations = new ArrayList<>();
+
+    @OneToMany(
+            mappedBy = "contest",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Question> questions = new ArrayList<>();
+
+    @OneToMany(
+            mappedBy = "contest",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Result> results = new ArrayList<>();
 
     public enum ContestType {
         MASTER, DOCTORA, PREPARTOIRE

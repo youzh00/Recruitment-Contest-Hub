@@ -33,6 +33,7 @@ public class PersonService {
         return personRepository.save(person);
     }
 
+    // TODO: updatePersonById() should update necessary fields only
     public Person updatePersonById(Long id, Person updatePerson) {
         Person personToUpdate = getPersonById(id);
         personToUpdate.setName(updatePerson.getName()); // assuming that name is a field in Person

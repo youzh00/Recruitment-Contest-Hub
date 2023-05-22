@@ -4,7 +4,9 @@ package project.services;
 import org.springframework.stereotype.Service;
 import project.exceptions.ResourceNotFoundException;
 import project.models.Contest;
+import project.models.Question;
 import project.models.Registration;
+import project.models.Result;
 import project.repositories.ContestRepository;
 import project.repositories.PersonRepository;
 
@@ -21,14 +23,12 @@ public class ContestService {
 
     public Contest createContest(Contest contest) {
 
-        Contest savedContest = contestRepository.save(contest);
-        return savedContest;
+        return contestRepository.save(contest);
     }
 
     public List<Contest> getContests() {
-        List<Contest> contestsList = contestRepository.findAll();
 
-        return contestsList;
+        return contestRepository.findAll();
     }
 
     public Contest updateContestById(Long id, Contest contest) {
@@ -43,9 +43,8 @@ public class ContestService {
     }
 
     public Contest getContestById(Long id) {
-        Contest contest = contestRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Contest not found"));
 
-        return contest;
+        return contestRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Contest not found"));
     }
 
     public void deleteContestById(Long id) {
@@ -53,6 +52,27 @@ public class ContestService {
     }
 
     public List<Registration> getRegistrationsForContest(Long id) {
-        List<Registration> registrations=contestRepository.get
+        return contestRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Contest not found")).getRegistrations();
+    }
+
+    public Registration registerPersonForContest(Long id, Registration registration) {
+        Contest contest = contestRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Contest not found"));
+        registration.setContest(contest);
+        return registration;
+    }
+
+    public List<Question> getQuestionsForContest(Long id) {
+        return contestRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Contest not found")).getQuestions();
+    }
+
+    // getResultsForContest
+    public List<Result> getResultsForContest(Long id) {
+        return contestRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Contest not found")).getResults();
+    }
+
+
+    // getResultByIdForContest
+    public Result getResultByIdForContest(Long id, Long resultId) {
+        return contestRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Contest not found")).getResults().stream().filter(result -> result.getId().equals(resultId)).findFirst().orElseThrow(() -> new ResourceNotFoundException("Result not found"));
     }
 }

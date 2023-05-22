@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import project.models.Contest;
 import project.models.Question;
 import project.models.Registration;
+import project.models.Result;
 import project.services.ContestService;
 
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.List;
 public class ContestController {
 
 
-    private ContestService contestService;
+    private final ContestService contestService;
 
     public ContestController(ContestService contestService) {
         this.contestService = contestService;
@@ -62,7 +63,7 @@ public class ContestController {
     // Register a user for a specific contest by ID (admin only)
     @PostMapping("/{id}/registrations")
     public Registration registerUserForContest(@PathVariable Long id, @RequestBody Registration registration) {
-        return contestService.registerUserForContest(id, registration);
+        return contestService.registerPersonForContest(id, registration);
     }
 
     // Retrieve all questions for a specific contest by ID
@@ -72,14 +73,14 @@ public class ContestController {
     }
 
     // Retrieve all submissions for a specific contest by ID
-    @GetMapping("/{id}/submissions")
-    public List<Submission> getSubmissionsForContest(@PathVariable Long id) {
-        return contestService.getSubmissionsForContest(id);
+    @GetMapping("/{id}/results")
+    public List<Result> getResultsForContest(@PathVariable Long id) {
+        return contestService.getResultsForContest(id);
     }
 
     // Retrieve a specific submission by ID for a specific contest
-    @GetMapping("/{contestId}/submissions/{submissionId}")
-    public Submission getSubmissionById(@PathVariable Long contestId, @PathVariable Long submissionId) {
-        return contestService.getSubmissionById(contestId, submissionId);
+    @GetMapping("/{contestId}/results/{resultId}")
+    public Result getSubmissionById(@PathVariable("contestId") Long contestId, @PathVariable("resultId") Long resultId) {
+        return contestService.getResultByIdForContest(contestId, resultId);
     }
 }
