@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 
-const login = () => {
+export default function Login() {
   return (
     <div>
       <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -182,6 +182,4 @@ const login = () => {
       </div>
     </div>
   );
-};
-
-export default login;
+}
