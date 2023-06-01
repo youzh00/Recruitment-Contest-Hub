@@ -69,10 +69,5 @@ public class ContestService {
     public List<Result> getResultsForContest(Long id) {
         return contestRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Contest not found")).getResults();
     }
-
-
-    // getResultByIdForContest
-    public Result getResultByIdForContest(Long id, Long resultId) {
-        return contestRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Contest not found")).getResults().stream().filter(result -> result.getId().equals(resultId)).findFirst().orElseThrow(() -> new ResourceNotFoundException("Result not found"));
-    }
+    
 }

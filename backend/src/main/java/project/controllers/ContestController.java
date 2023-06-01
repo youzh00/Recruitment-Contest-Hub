@@ -66,21 +66,15 @@ public class ContestController {
         return contestService.registerPersonForContest(id, registration);
     }
 
-    // Retrieve all questions for a specific contest by ID
     @GetMapping("/{id}/questions")
     public List<Question> getQuestionsForContest(@PathVariable Long id) {
         return contestService.getQuestionsForContest(id);
     }
 
-    // Retrieve all submissions for a specific contest by ID
+    // Admin
     @GetMapping("/{id}/results")
     public List<Result> getResultsForContest(@PathVariable Long id) {
         return contestService.getResultsForContest(id);
     }
 
-    // Retrieve a specific submission by ID for a specific contest
-    @GetMapping("/{contestId}/results/{resultId}")
-    public Result getSubmissionById(@PathVariable("contestId") Long contestId, @PathVariable("resultId") Long resultId) {
-        return contestService.getResultByIdForContest(contestId, resultId);
-    }
 }
