@@ -31,14 +31,17 @@ public class RegisterRequest {
     @NotBlank(message = "CIN must not be blank")
     private String cin;
 
+    private String birthday;
 
-    public RegisterRequest(String name, String email, String password, String mobileNumber, String cin) {
+
+    public RegisterRequest(String name, String email, String password, String mobileNumber, String cin, String birthday) {
         this.role = Set.of(ERole.ROLE_USER.name());
         this.password = password;
         this.name = name;
         this.mobileNumber = mobileNumber;
         this.email = email;
         this.cin = cin;
+        this.birthday = birthday;
     }
 
     public Set<String> getRole() {
@@ -89,4 +92,11 @@ public class RegisterRequest {
         this.cin = cin;
     }
 
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
 }

@@ -27,6 +27,12 @@ public class Contest extends BaseEntity {
     @NotBlank(message = "School name must not be blank ")
     private String schoolName;
 
+    @NotBlank(message = "Contest name must not be blank ")
+    private String contestName;
+
+    @NotBlank(message = "Contest description must not be blank ")
+    private String description;
+
     @NotBlank(message = "Deadline must not be blank ")
     private String deadline;
 
@@ -38,6 +44,14 @@ public class Contest extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     public ContestType type;
+
+
+    @OneToMany(
+            mappedBy = "contest",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<DocType> docTypes = new ArrayList<>();
 
 
     @OneToMany(

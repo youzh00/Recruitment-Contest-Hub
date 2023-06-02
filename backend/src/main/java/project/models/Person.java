@@ -54,6 +54,9 @@ public class Person extends BaseEntity {
     @NotBlank(message = "CIN must not be blank")
     private String cin;
 
+    @NotBlank(message = "Birthday must not be blank")
+    private String birthday;
+
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",
@@ -69,12 +72,13 @@ public class Person extends BaseEntity {
     )
     private List<Registration> registrations = new ArrayList<>();
 
-    public Person(String name, String email, String password, String mobileNumber, String cin) {
+    public Person(String name, String email, String password, String mobileNumber, String cin, String birthday) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.mobileNumber = mobileNumber;
         this.cin = cin;
+        this.birthday = birthday;
     }
 
     public Registration addRegistration(Registration registration) {
