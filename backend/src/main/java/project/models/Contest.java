@@ -59,6 +59,13 @@ public class Contest extends BaseEntity {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
+    private List<DocType> requiredDocs = new ArrayList<>();
+
+    @OneToMany(
+            mappedBy = "contest",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     private List<Result> results = new ArrayList<>();
 
     public enum ContestType {
