@@ -1,148 +1,58 @@
 import NavBar from "@/components/NavBar";
 import axios from "axios";
+import { useState } from "react";
 
-export const getServerSideProps = async ({ params }) => {
-  const { id } = params;
-  // const { data: concour } = await axios.get(
-  //   `http://localhost:5000/api/contest/${id}`
-  // );
-  return {
-    props: {
-      // concour,
-    }, // will be passed to the page component as props
-  };
+const concour = {
+  id: 1,
+  schoolName: "INPT",
+
+  deadline: "06/06/2023",
+
+  startingTime: "06/03/2023",
+
+  duration: 1000 * 60 * 60 * 2,
+
+  contestName: "Concours d'entrée à l'INPT",
+
+  description: "Concours d'entrée à l'INPT",
+
+  type: "MASTER",
+  image: "https://picsum.photos/200/200",
 };
 
-export default function Concour({ concour }) {
+// export const getServerSideProps = async ({ params }) => {
+//   const { id } = params;
+//   // const { data: concour } = await axios.get(
+//   //   `http://localhost:5000/api/contest/${id}`
+//   // );
+//   return {
+//     props: {
+//       // concour,
+//     }, // will be passed to the page component as props
+//   };'setSecondName' is declared but its value is never read.ts(6133)
+
+// };
+
+export default function Concour() {
+  const [firstName, setFirstName] = useState("");
+  const [secondName, setSecondName] = useState("");
+  const [firstBac, setFirstBac] = useState("");
+  const [secondBac, setSecondBac] = useState("");
+  const [licentiate, setLicentiate] = useState("");
+  const [licentiateDoc, setLicentiateDoc] = useState("");
+  const [bacDoc, setBacDoc] = useState("");
+  const [cinDoc, setCinDoc] = useState("");
+
   return (
     <div className="relative pt-6 pb-16 sm:pb-24">
       <NavBar />
+      <div className="text-center">
+        <h1 className=" font-medium mt-10 tracking-tight text-gray-900 sm:text-xs md:text-2xl">
+          <span className="block xl:inline">{concour.contestName}</span>
+        </h1>
+      </div>
       <div className="container mx-auto mt-16 px-48">
         <form className="space-y-6" action="#" method="POST">
-          <div className="px-4 py-5 sm:p-6">
-            <div className="md:grid md:grid-cols-3 md:gap-6">
-              <div className="md:col-span-1">
-                <h3 className="text-lg font-medium leading-6 text-gray-900">
-                  Profile
-                </h3>
-                <p className="mt-1 text-sm text-gray-500">
-                  This information will be displayed publicly so be careful what
-                  you share.
-                </p>
-              </div>
-              <div className="mt-5 space-y-6 md:col-span-2 md:mt-0">
-                <div className="grid grid-cols-3 gap-6">
-                  <div className="col-span-3 sm:col-span-2">
-                    <label
-                      for="company-website"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      Website
-                    </label>
-                    <div className="mt-1 flex rounded-md shadow-sm">
-                      <span className="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-sm text-gray-500">
-                        http://
-                      </span>
-                      <input
-                        type="text"
-                        name="company-website"
-                        id="company-website"
-                        className="block w-full flex-1 rounded-none rounded-r-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        placeholder="www.example.com"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <label
-                    for="about"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    About
-                  </label>
-                  <div className="mt-1">
-                    <textarea
-                      id="about"
-                      name="about"
-                      rows="3"
-                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                      placeholder="you@example.com"
-                    ></textarea>
-                  </div>
-                  <p className="mt-2 text-sm text-gray-500">
-                    Brief description for your profile. URLs are hyperlinked.
-                  </p>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">
-                    Photo
-                  </label>
-                  <div className="mt-1 flex items-center space-x-5">
-                    <span className="inline-block h-12 w-12 overflow-hidden rounded-full bg-gray-100">
-                      <svg
-                        className="h-full w-full text-gray-300"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                      </svg>
-                    </span>
-                    <button
-                      type="button"
-                      className="rounded-md border border-gray-300 bg-white py-2 px-3 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                    >
-                      Change
-                    </button>
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">
-                    Cover photo
-                  </label>
-                  <div className="mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
-                    <div className="space-y-1 text-center">
-                      <svg
-                        className="mx-auto h-12 w-12 text-gray-400"
-                        stroke="currentColor"
-                        fill="none"
-                        viewBox="0 0 48 48"
-                        aria-hidden="true"
-                      >
-                        <path
-                          d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                          stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        />
-                      </svg>
-                      <div className="flex text-sm text-gray-600">
-                        <label
-                          for="file-upload"
-                          className="relative cursor-pointer rounded-md bg-white font-medium text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500"
-                        >
-                          <span>Upload a file</span>
-                          <input
-                            id="file-upload"
-                            name="file-upload"
-                            type="file"
-                            className="sr-only"
-                          />
-                        </label>
-                        <p className="pl-1">or drag and drop</p>
-                      </div>
-                      <p className="text-xs text-gray-500">
-                        PNG, JPG, GIF up to 10MB
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
           <div className="px-4 py-5 sm:p-6">
             <div className="md:grid md:grid-cols-3 md:gap-6">
               <div className="md:col-span-1">
@@ -150,285 +60,187 @@ export default function Concour({ concour }) {
                   Personal Information
                 </h3>
                 <p className="mt-1 text-sm text-gray-500">
-                  Use a permanent address where you can receive mail.
+                  The section is for contest registration.
                 </p>
               </div>
               <div className="mt-5 md:col-span-2 md:mt-0">
                 <div className="grid grid-cols-6 gap-6">
                   <div className="col-span-6 sm:col-span-3">
                     <label
-                      for="first-name"
+                      for="firstname"
                       className="block text-sm font-medium text-gray-700"
                     >
-                      First name
+                      First Name
                     </label>
                     <input
                       type="text"
-                      name="first-name"
-                      id="first-name"
-                      autocomplete="given-name"
+                      name="firstname"
+                      id="firstname"
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                      required
+                      pattern="^[A-Za-z]+(?:\\s+[A-Za-z]+)*$"
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                    />
+                  </div>
+                  <div className="col-span-6 sm:col-span-3">
+                    <label
+                      for="secondname"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Second Name
+                    </label>
+                    <input
+                      type="text"
+                      name="secondname"
+                      id="secondname"
+                      value={secondName}
+                      onChange={(e) => setSecondName(e.target.value)}
+                      required
+                      pattern="^[A-Za-z]+(?:\\s+[A-Za-z]+)*$"
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                    />
+                  </div>
+                  <div className="col-span-6 sm:col-span-3">
+                    <label
+                      for="2nd"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      2nd year baccalaureate mark
+                    </label>
+                    <input
+                      type="text"
+                      name="2nd"
+                      id="2nd"
+                      value={secondBac}
+                      onChange={(e) => setSecondBac(e.target.value)}
+                      pattern="^[0-9]{1,2}(\.[0-9]{1,2})?$"
+                      required
                       className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     />
                   </div>
 
                   <div className="col-span-6 sm:col-span-3">
                     <label
-                      for="last-name"
+                      for="1st"
                       className="block text-sm font-medium text-gray-700"
                     >
-                      Last name
+                      1st year baccalaureate mark
                     </label>
                     <input
                       type="text"
-                      name="last-name"
-                      id="last-name"
-                      autocomplete="family-name"
+                      name="1st"
+                      id="1st"
+                      value={firstBac}
+                      onChange={(e) => setFirstBac(e.target.value)}
+                      pattern="^[0-9]{1,2}(\.[0-9]{1,2})?$"
+                      required
                       className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     />
                   </div>
+                  {concour.type === "MASTER" && (
+                    <>
+                      <div className="col-span-6 sm:col-span-4">
+                        <label
+                          for="licentiate"
+                          className="block text-sm font-medium text-gray-700"
+                        >
+                          Average mark of licentiate
+                        </label>
+                        <input
+                          type="text"
+                          name="licentiate"
+                          id="licentiate"
+                          value={licentiate}
+                          onChange={(e) => setLicentiate(e.target.value)}
+                          pattern="^[0-9]{1,2}(\.[0-9]{1,2})?$"
+                          required
+                          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        />
+                      </div>
+                      <div className="col-span-6 ">
+                        <label
+                          for="file-input"
+                          className="block text-sm font-medium text-gray-700 mb-1"
+                        >
+                          Licentiate Document
+                        </label>
+                        <input
+                          type="file"
+                          name="file-input"
+                          value={licentiateDoc}
+                          onChange={(e) => setLicentiateDoc(e.target.value)}
+                          id="file-input"
+                          className="block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-white dark:border-gray-300 dark:text-gray-800
+    file:bg-transparent file:border-0
+    file:bg-gray-100 file:mr-4
+    file:py-3 file:px-4
+    dark:file:bg-indigo-600 dark:file:text-white"
+                        />
+                        <p
+                          className="mt-1 text-sm text-gray-800 dark:text-gray-500"
+                          id="file_input_help"
+                        >
+                          Only PDF (MAX 2MB).
+                        </p>
+                      </div>
+                    </>
+                  )}
 
-                  <div className="col-span-6 sm:col-span-4">
+                  <div className="col-span-6 ">
                     <label
-                      for="email-address"
-                      className="block text-sm font-medium text-gray-700"
+                      for="file-input"
+                      className="block text-sm font-medium text-gray-700 mb-1"
                     >
-                      Email address
+                      Baccalaureate Document
                     </label>
                     <input
-                      type="text"
-                      name="email-address"
-                      id="email-address"
-                      autocomplete="email"
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      type="file"
+                      name="file-input"
+                      id="file-input"
+                      value={bacDoc}
+                      onChange={(e) => setBacDoc(e.target.value)}
+                      className="block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-white dark:border-gray-300 dark:text-gray-800
+    file:bg-transparent file:border-0
+    file:bg-gray-100 file:mr-4
+    file:py-3 file:px-4
+    dark:file:bg-indigo-600 dark:file:text-white"
                     />
+                    <p
+                      className="mt-1 text-sm text-gray-800 dark:text-gray-500"
+                      id="file_input_help"
+                    >
+                      Only PDF (MAX 2MB).
+                    </p>
                   </div>
 
-                  <div className="col-span-6 sm:col-span-3">
+                  <div className="col-span-6 ">
                     <label
-                      for="country"
-                      className="block text-sm font-medium text-gray-700"
+                      for="file-input"
+                      className="block text-sm font-medium text-gray-700 mb-1"
                     >
-                      Country
-                    </label>
-                    <select
-                      id="country"
-                      name="country"
-                      autocomplete="country-name"
-                      className="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 px-3 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                    >
-                      <option>United States</option>
-                      <option>Canada</option>
-                      <option>Mexico</option>
-                    </select>
-                  </div>
-
-                  <div className="col-span-6">
-                    <label
-                      for="street-address"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      Street address
+                      CIN Document
                     </label>
                     <input
-                      type="text"
-                      name="street-address"
-                      id="street-address"
-                      autocomplete="street-address"
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      type="file"
+                      name="file-input"
+                      id="file-input"
+                      value={cinDoc}
+                      onChange={(e) => setCinDoc(e.target.value)}
+                      className="block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-white dark:border-gray-300 dark:text-gray-800
+    file:bg-transparent file:border-0
+    file:bg-gray-100 file:mr-4
+    file:py-3 file:px-4
+    dark:file:bg-indigo-600 dark:file:text-white"
                     />
-                  </div>
-
-                  <div className="col-span-6 sm:col-span-6 lg:col-span-2">
-                    <label
-                      for="city"
-                      className="block text-sm font-medium text-gray-700"
+                    <p
+                      className="mt-1 text-sm text-gray-800 dark:text-gray-500"
+                      id="file_input_help"
                     >
-                      City
-                    </label>
-                    <input
-                      type="text"
-                      name="city"
-                      id="city"
-                      autocomplete="address-level2"
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                    />
-                  </div>
-
-                  <div className="col-span-6 sm:col-span-3 lg:col-span-2">
-                    <label
-                      for="region"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      State / Province
-                    </label>
-                    <input
-                      type="text"
-                      name="region"
-                      id="region"
-                      autocomplete="address-level1"
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                    />
-                  </div>
-
-                  <div className="col-span-6 sm:col-span-3 lg:col-span-2">
-                    <label
-                      for="postal-code"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      ZIP / Postal code
-                    </label>
-                    <input
-                      type="text"
-                      name="postal-code"
-                      id="postal-code"
-                      autocomplete="postal-code"
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                    />
+                      Only PDF (MAX 2MB).
+                    </p>
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="px-4 py-5 sm:p-6">
-            <div className="md:grid md:grid-cols-3 md:gap-6">
-              <div className="md:col-span-1">
-                <h3 className="text-lg font-medium leading-6 text-gray-900">
-                  Notifications
-                </h3>
-                <p className="mt-1 text-sm text-gray-500">
-                  Decide which communications you'd like to receive and how.
-                </p>
-              </div>
-              <div className="mt-5 space-y-6 md:col-span-2 md:mt-0">
-                <fieldset>
-                  <legend className="sr-only">By Email</legend>
-                  <div
-                    className="text-base font-medium text-gray-900"
-                    aria-hidden="true"
-                  >
-                    By Email
-                  </div>
-                  <div className="mt-4 space-y-4">
-                    <div className="flex items-start">
-                      <div className="flex h-5 items-center">
-                        <input
-                          id="comments"
-                          name="comments"
-                          type="checkbox"
-                          className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                        />
-                      </div>
-                      <div className="ml-3 text-sm">
-                        <label
-                          for="comments"
-                          className="font-medium text-gray-700"
-                        >
-                          Comments
-                        </label>
-                        <p className="text-gray-500">
-                          Get notified when someones posts a comment on a
-                          posting.
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex items-start">
-                      <div className="flex h-5 items-center">
-                        <input
-                          id="candidates"
-                          name="candidates"
-                          type="checkbox"
-                          className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                        />
-                      </div>
-                      <div className="ml-3 text-sm">
-                        <label
-                          for="candidates"
-                          className="font-medium text-gray-700"
-                        >
-                          Candidates
-                        </label>
-                        <p className="text-gray-500">
-                          Get notified when a candidate applies for a job.
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex items-start">
-                      <div className="flex h-5 items-center">
-                        <input
-                          id="offers"
-                          name="offers"
-                          type="checkbox"
-                          className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                        />
-                      </div>
-                      <div className="ml-3 text-sm">
-                        <label
-                          for="offers"
-                          className="font-medium text-gray-700"
-                        >
-                          Offers
-                        </label>
-                        <p className="text-gray-500">
-                          Get notified when a candidate accepts or rejects an
-                          offer.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </fieldset>
-                <fieldset>
-                  <legend className="contents text-base font-medium text-gray-900">
-                    Push Notifications
-                  </legend>
-                  <p className="text-sm text-gray-500">
-                    These are delivered via SMS to your mobile phone.
-                  </p>
-                  <div className="mt-4 space-y-4">
-                    <div className="flex items-center">
-                      <input
-                        id="push-everything"
-                        name="push-notifications"
-                        type="radio"
-                        className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                      />
-                      <label
-                        for="push-everything"
-                        className="ml-3 block text-sm font-medium text-gray-700"
-                      >
-                        Everything
-                      </label>
-                    </div>
-                    <div className="flex items-center">
-                      <input
-                        id="push-email"
-                        name="push-notifications"
-                        type="radio"
-                        className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                      />
-                      <label
-                        for="push-email"
-                        className="ml-3 block text-sm font-medium text-gray-700"
-                      >
-                        Same as email
-                      </label>
-                    </div>
-                    <div className="flex items-center">
-                      <input
-                        id="push-nothing"
-                        name="push-notifications"
-                        type="radio"
-                        className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                      />
-                      <label
-                        for="push-nothing"
-                        className="ml-3 block text-sm font-medium text-gray-700"
-                      >
-                        No push notifications
-                      </label>
-                    </div>
-                  </div>
-                </fieldset>
               </div>
             </div>
           </div>
