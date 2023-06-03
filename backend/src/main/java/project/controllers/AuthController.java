@@ -91,6 +91,7 @@ public class AuthController {
 
     }
 
+    @CrossOrigin("*")
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest signUpRequest) {
         if (personRepository.existsByName(signUpRequest.getName())) {
