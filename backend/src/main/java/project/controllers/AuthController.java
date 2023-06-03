@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -91,7 +91,6 @@ public class AuthController {
 
     }
 
-    @CrossOrigin("*")
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest signUpRequest) {
         if (personRepository.existsByName(signUpRequest.getName())) {
