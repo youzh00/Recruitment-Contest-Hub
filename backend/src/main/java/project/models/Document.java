@@ -36,18 +36,6 @@ public class Document extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(
-            name = "contest_id",
-            referencedColumnName = "id",
-            nullable = false,
-            foreignKey = @ForeignKey(
-                    name = "document_contest_id_fkey"
-            )
-    )
-    private Contest contest;
-
-
-    @ManyToOne
-    @JoinColumn(
             name = "registration_id",
             referencedColumnName = "id",
             nullable = false,

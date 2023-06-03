@@ -8,7 +8,7 @@ import project.models.Question;
 import project.models.Registration;
 import project.models.Result;
 import project.repositories.ContestRepository;
-import project.repositories.PersonRepository;
+import project.repositories.RegistrationRepository;
 
 import java.util.List;
 
@@ -17,8 +17,12 @@ public class ContestService {
 
     private final ContestRepository contestRepository;
 
-    public ContestService(PersonRepository personRepository, ContestRepository contestRepository) {
+
+    private final RegistrationRepository registrationRepository;
+
+    public ContestService(ContestRepository contestRepository, RegistrationRepository registrationRepository) {
         this.contestRepository = contestRepository;
+        this.registrationRepository = registrationRepository;
     }
 
     public Contest createContest(Contest contest) {
@@ -58,6 +62,7 @@ public class ContestService {
     public Registration registerPersonForContest(Long id, Registration registration) {
         Contest contest = contestRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Contest not found"));
         registration.setContest(contest);
+        registrationRepository.save(registration);
         return registration;
     }
 
@@ -69,5 +74,5 @@ public class ContestService {
     public List<Result> getResultsForContest(Long id) {
         return contestRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Contest not found")).getResults();
     }
-    
+
 }

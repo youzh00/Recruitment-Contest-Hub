@@ -2,6 +2,7 @@ import React from "react";
 import { Fragment } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
 
 const navigation = [
   { name: "Concours", href: "#" },
@@ -49,12 +50,12 @@ const NavBar = () => {
             </div>
             <div className="hidden md:absolute md:inset-y-0 md:right-0 md:flex md:items-center md:justify-end">
               <span className="inline-flex rounded-md shadow">
-                <a
-                  href="#"
+                <Link
+                  href="/login"
                   className="inline-flex items-center rounded-md border border-transparent bg-white px-4 py-2 text-base font-medium text-indigo-600 hover:bg-gray-50"
                 >
                   Log in
-                </a>
+                </Link>
               </span>
             </div>
           </nav>
@@ -96,12 +97,12 @@ const NavBar = () => {
                   </a>
                 ))}
               </div>
-              <a
-                href="#"
+              <Link
+                href="/login"
                 className="block w-full bg-gray-50 px-5 py-3 text-center font-medium text-indigo-600 hover:bg-gray-100"
               >
                 Log in
-              </a>
+              </Link>
             </div>
           </Popover.Panel>
         </Transition>
