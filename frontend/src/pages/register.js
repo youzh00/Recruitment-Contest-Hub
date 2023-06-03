@@ -17,15 +17,21 @@ export default function Register() {
     e.preventDefault();
     const user = {
       name: userName,
-      mobileNumber: phone,
       email,
-      cin,
       password,
+      mobileNumber: phone,
+      cin,
+      birthday,
     };
 
-    await axios.post("http://localhost:5000/api/auth/signup", user);
+    await axios.post("http://localhost:5000/api/auth/signup", user, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+    });
 
-    router.push("/home");
+    router.push("/login");
   }
   return (
     <div>
