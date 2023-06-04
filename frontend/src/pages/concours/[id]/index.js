@@ -43,6 +43,16 @@ export default function Concour() {
   const [bacDoc, setBacDoc] = useState("");
   const [cinDoc, setCinDoc] = useState("");
 
+  async function handleRegister(e) {
+    e.preventDefault();
+    const data = await axios.post(
+      "http://localhost:5000/api/contest/{id}/registrations",
+      {
+        firstBacGrade: firstBac,
+        secondBacGrade: secondBac,
+      }
+    );
+  }
   return (
     <div className="relative pt-6 pb-16 sm:pb-24">
       <NavBar />
@@ -67,7 +77,7 @@ export default function Concour() {
                 <div className="grid grid-cols-6 gap-6">
                   <div className="col-span-6 sm:col-span-3">
                     <label
-                      forHtml="firstname"
+                      for="firstname"
                       className="block text-sm font-medium text-gray-700"
                     >
                       First Name
@@ -85,7 +95,7 @@ export default function Concour() {
                   </div>
                   <div className="col-span-6 sm:col-span-3">
                     <label
-                      forHtml="secondname"
+                      for="secondname"
                       className="block text-sm font-medium text-gray-700"
                     >
                       Second Name
@@ -103,7 +113,7 @@ export default function Concour() {
                   </div>
                   <div className="col-span-6 sm:col-span-3">
                     <label
-                      forHtml="2nd"
+                      for="2nd"
                       className="block text-sm font-medium text-gray-700"
                     >
                       2nd year baccalaureate mark
@@ -122,7 +132,7 @@ export default function Concour() {
 
                   <div className="col-span-6 sm:col-span-3">
                     <label
-                      forHtml="1st"
+                      for="1st"
                       className="block text-sm font-medium text-gray-700"
                     >
                       1st year baccalaureate mark
@@ -142,7 +152,7 @@ export default function Concour() {
                     <>
                       <div className="col-span-6 sm:col-span-4">
                         <label
-                          forHtml="licentiate"
+                          for="licentiate"
                           className="block text-sm font-medium text-gray-700"
                         >
                           Average mark of licentiate
@@ -160,7 +170,7 @@ export default function Concour() {
                       </div>
                       <div className="col-span-6 ">
                         <label
-                          forHtml="file-input"
+                          for="file-input"
                           className="block text-sm font-medium text-gray-700 mb-1"
                         >
                           Licentiate Document
@@ -189,7 +199,7 @@ export default function Concour() {
 
                   <div className="col-span-6 ">
                     <label
-                      forHtml="file-input"
+                      for="file-input"
                       className="block text-sm font-medium text-gray-700 mb-1"
                     >
                       Baccalaureate Document
@@ -216,7 +226,7 @@ export default function Concour() {
 
                   <div className="col-span-6 ">
                     <label
-                      forHtml="file-input"
+                      for="file-input"
                       className="block text-sm font-medium text-gray-700 mb-1"
                     >
                       CIN Document
