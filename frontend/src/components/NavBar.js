@@ -1,14 +1,13 @@
-import React from "react";
-import { Fragment } from "react";
-import { Menu, Popover, Transition } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import Link from "next/link";
-import Image from "next/image";
 import { cn } from "@/utils/cn";
+import { Menu, Popover, Transition } from "@headlessui/react";
+import { Bars3Icon, UserCircleIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { Fragment } from "react";
 
 const navigations = [
-  { name: "Concours", href: "#" },
+  { name: "Concours", href: "/home" },
   { name: "Features", href: "#" },
   { name: "About", href: "#" },
   { name: "Contact us", href: "#" },
@@ -19,7 +18,9 @@ const userNavigations = [
   { name: "Profile", href: "/profile" },
 ];
 
-const NavBar = () => {
+const NavBar = ({ user }) => {
+  const router = useRouter();
+
   return (
     <div>
       <Popover>
@@ -58,68 +59,81 @@ const NavBar = () => {
               ))}
             </div>
             <div className="absolute inset-y-0 right-0 flex items-center justify-end">
-              <Menu as="div" className="relative ml-4 flex-shrink-0">
-                <div>
-                  <Menu.Button className="flex rounded-full text-sm p-1 text-white focus:outline-none ">
-                    <span className="sr-only">Open user menu</span>
-                    <div className="relative h-8 w-8 rounded-full">
-                      <Image
-                        className="rounded-full"
-                        src={"/assets/logo.png"}
-                        width={32}
-                        height={32}
-                        alt=""
-                      />
-                    </div>
-                  </Menu.Button>
-                </div>
-                <Transition
-                  as={Fragment}
-                  enter="transition ease-out duration-100"
-                  enterFrom="transform opacity-0 scale-95"
-                  enterTo="transform opacity-100 scale-100"
-                  leave="transition ease-in duration-75"
-                  leaveFrom="transform opacity-100 scale-100"
-                  leaveTo="transform opacity-0 scale-95"
-                >
-                  <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                    {userNavigations.map((item) => (
-                      <Menu.Item key={item.name}>
+              {!user ? (
+                <span className="inline-flex rounded-md shadow">
+                  <Link
+                    href="/signin"
+                    className="inline-flex items-center rounded-md border border-transparent bg-white px-4 py-2 text-base font-medium text-indigo-600 hover:bg-gray-50"
+                  >
+                    Log in
+                  </Link>
+                </span>
+              ) : (
+                <Menu as="div" className="relative ml-4 flex-shrink-0">
+                  <div>
+                    <Menu.Button className="flex rounded-full text-sm p-1 text-white focus:outline-none ">
+                      <span className="sr-only">Open user menu</span>
+                      <div className="relative h-8 w-8 rounded-full">
+                        <UserCircleIcon className="h-8 w-8 rounded-full text-gray-900" />
+                      </div>
+                    </Menu.Button>
+                  </div>
+                  <Transition
+                    as={Fragment}
+                    enter="transition ease-out duration-100"
+                    enterFrom="transform opacity-0 scale-95"
+                    enterTo="transform opacity-100 scale-100"
+                    leave="transition ease-in duration-75"
+                    leaveFrom="transform opacity-100 scale-100"
+                    leaveTo="transform opacity-0 scale-95"
+                  >
+                    <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      {userNavigations.map((item) => (
+                        <Menu.Item key={item.name}>
+                          {({ active }) => (
+                            <a
+                              href={item.href}
+                              className={cn(
+                                active ? "bg-gray-100" : "",
+                                "block py-2 px-4 text-sm text-gray-700"
+                              )}
+                            >
+                              {item.name}
+                            </a>
+                          )}
+                        </Menu.Item>
+                      ))}
+                      <Menu.Item key={"signout"}>
                         {({ active }) => (
-                          <a
-                            href={item.href}
+                          <Link
+                            href="#"
+                            onClick={async (e) => {
+                              e.preventDefault();
+                              await axios.post(
+                                "http://localhost:5000/api/auth/signout",
+                                null,
+                                {
+                                  headers: {
+                                    "Content-Type": "application/json",
+                                  },
+                                  withCredentials: true,
+                                }
+                              );
+                              router.push("/login");
+                            }}
                             className={cn(
                               active ? "bg-gray-100" : "",
-                              "block py-2 px-4 text-sm text-gray-700"
+                              "block px-4 py-2 text-sm text-gray-700"
                             )}
                           >
-                            {item.name}
-                          </a>
+                            Sign out
+                          </Link>
                         )}
                       </Menu.Item>
-                    ))}
-                    <Menu.Item key={"signout"}>
-                      {({ active }) => (
-                        <Link
-                          href="#"
-                          onClick={async (e) => {
-                            e.preventDefault();
-                            await axios.post(
-                              "http://localhost:5000/api/auth/signout"
-                            );
-                          }}
-                          className={cn(
-                            active ? "bg-gray-100" : "",
-                            "block px-4 py-2 text-sm text-gray-700"
-                          )}
-                        >
-                          Sign out
-                        </Link>
-                      )}
-                    </Menu.Item>
-                  </Menu.Items>
-                </Transition>
-              </Menu>
+                    </Menu.Items>
+                  </Transition>
+                </Menu>
+              )}
             </div>
           </nav>
         </div>
