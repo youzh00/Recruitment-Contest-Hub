@@ -43,6 +43,16 @@ export default function Concour() {
   const [bacDoc, setBacDoc] = useState("");
   const [cinDoc, setCinDoc] = useState("");
 
+  async function handleRegister(e) {
+    e.preventDefault();
+    const data = await axios.post(
+      "http://localhost:5000/api/contest/{id}/registrations",
+      {
+        firstBacGrade: firstBac,
+        secondBacGrade: secondBac,
+      }
+    );
+  }
   return (
     <div className="relative pt-6 pb-16 sm:pb-24">
       <NavBar />
