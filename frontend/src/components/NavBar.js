@@ -1,12 +1,10 @@
-import React from "react";
-import { Fragment } from "react";
-import { Menu, Popover, Transition } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import Link from "next/link";
-import Image from "next/image";
 import { cn } from "@/utils/cn";
+import { Menu, Popover, Transition } from "@headlessui/react";
+import { Bars3Icon, UserCircleIcon } from "@heroicons/react/24/outline";
 import axios from "axios";
+import Link from "next/link";
 import { useRouter } from "next/router";
+import { Fragment } from "react";
 
 const navigations = [
   { name: "Concours", href: "#" },
@@ -66,13 +64,7 @@ const NavBar = () => {
                   <Menu.Button className="flex rounded-full text-sm p-1 text-white focus:outline-none ">
                     <span className="sr-only">Open user menu</span>
                     <div className="relative h-8 w-8 rounded-full">
-                      <Image
-                        className="rounded-full"
-                        src={"/assets/logo.png"}
-                        width={32}
-                        height={32}
-                        alt=""
-                      />
+                      <UserCircleIcon className="h-8 w-8 rounded-full text-gray-900" />
                     </div>
                   </Menu.Button>
                 </div>

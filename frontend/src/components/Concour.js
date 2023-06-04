@@ -6,7 +6,7 @@ const concour = {
 
   deadline: "06/06/2023",
 
-  startingTime: "06/03/2023",
+  startingTime: "2023-06-04T22:39:31.000Z",
 
   duration: 1000 * 60 * 60 * 2,
 
