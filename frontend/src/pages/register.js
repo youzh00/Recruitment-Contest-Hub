@@ -144,7 +144,7 @@ export default function Register() {
                   />
                 </div>
               </div>
-              {/* Birthdat Section */}
+              {/* Birthday Section */}
 
               <div>
                 <label

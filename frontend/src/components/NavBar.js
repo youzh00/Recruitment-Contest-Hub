@@ -1,15 +1,24 @@
 import React from "react";
 import { Fragment } from "react";
-import { Popover, Transition } from "@headlessui/react";
+import { Menu, Popover, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import Image from "next/image";
+import { cn } from "@/utils/cn";
+import axios from "axios";
 
-const navigation = [
+const navigations = [
   { name: "Concours", href: "#" },
   { name: "Features", href: "#" },
   { name: "About", href: "#" },
   { name: "Contact us", href: "#" },
 ];
+
+const userNavigations = [
+  { name: "Registrations", href: "/registrations" },
+  { name: "Profile", href: "/profile" },
+];
+
 const NavBar = () => {
   return (
     <div>
@@ -38,7 +47,7 @@ const NavBar = () => {
               </div>
             </div>
             <div className="hidden md:flex md:space-x-10">
-              {navigation.map((item) => (
+              {navigations.map((item) => (
                 <a
                   key={item.name}
                   href={item.href}
@@ -48,64 +57,72 @@ const NavBar = () => {
                 </a>
               ))}
             </div>
-            <div className="hidden md:absolute md:inset-y-0 md:right-0 md:flex md:items-center md:justify-end">
-              <span className="inline-flex rounded-md shadow">
-                <Link
-                  href="/login"
-                  className="inline-flex items-center rounded-md border border-transparent bg-white px-4 py-2 text-base font-medium text-indigo-600 hover:bg-gray-50"
+            <div className="absolute inset-y-0 right-0 flex items-center justify-end">
+              <Menu as="div" className="relative ml-4 flex-shrink-0">
+                <div>
+                  <Menu.Button className="flex rounded-full text-sm p-1 text-white focus:outline-none ">
+                    <span className="sr-only">Open user menu</span>
+                    <div className="relative h-8 w-8 rounded-full">
+                      <Image
+                        className="rounded-full"
+                        src={"/assets/logo.png"}
+                        width={32}
+                        height={32}
+                        alt=""
+                      />
+                    </div>
+                  </Menu.Button>
+                </div>
+                <Transition
+                  as={Fragment}
+                  enter="transition ease-out duration-100"
+                  enterFrom="transform opacity-0 scale-95"
+                  enterTo="transform opacity-100 scale-100"
+                  leave="transition ease-in duration-75"
+                  leaveFrom="transform opacity-100 scale-100"
+                  leaveTo="transform opacity-0 scale-95"
                 >
-                  Log in
-                </Link>
-              </span>
+                  <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    {userNavigations.map((item) => (
+                      <Menu.Item key={item.name}>
+                        {({ active }) => (
+                          <a
+                            href={item.href}
+                            className={cn(
+                              active ? "bg-gray-100" : "",
+                              "block py-2 px-4 text-sm text-gray-700"
+                            )}
+                          >
+                            {item.name}
+                          </a>
+                        )}
+                      </Menu.Item>
+                    ))}
+                    <Menu.Item key={"signout"}>
+                      {({ active }) => (
+                        <Link
+                          href="#"
+                          onClick={async (e) => {
+                            e.preventDefault();
+                            await axios.post(
+                              "http://localhost:5000/api/auth/signout"
+                            );
+                          }}
+                          className={cn(
+                            active ? "bg-gray-100" : "",
+                            "block px-4 py-2 text-sm text-gray-700"
+                          )}
+                        >
+                          Sign out
+                        </Link>
+                      )}
+                    </Menu.Item>
+                  </Menu.Items>
+                </Transition>
+              </Menu>
             </div>
           </nav>
         </div>
-
-        <Transition
-          as={Fragment}
-          enter="duration-150 ease-out"
-          enterFrom="opacity-0 scale-95"
-          enterTo="opacity-100 scale-100"
-          leave="duration-100 ease-in"
-          leaveFrom="opacity-100 scale-100"
-          leaveTo="opacity-0 scale-95"
-        >
-          <Popover.Panel
-            focus
-            className="absolute inset-x-0 top-0 z-10 origin-top-right transform p-2 transition md:hidden"
-          >
-            <div className="overflow-hidden rounded-lg bg-white shadow-md ring-1 ring-black ring-opacity-5">
-              <div className="flex items-center justify-between px-5 pt-4">
-                <div>
-                  <img className="h-8 w-auto" src="/assets/logo.png" alt="" />
-                </div>
-                <div className="-mr-2">
-                  <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
-                    <span className="sr-only">Close menu</span>
-                    <XMarkIcon className="h-6 w-6" aria-hidden="true" />
-                  </Popover.Button>
-                </div>
-              </div>
-              <div className="px-2 pt-2 pb-3">
-                {navigation.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900"
-                  >
-                    {item.name}
-                  </a>
-                ))}
-              </div>
-              <Link
-                href="/login"
-                className="block w-full bg-gray-50 px-5 py-3 text-center font-medium text-indigo-600 hover:bg-gray-100"
-              >
-                Log in
-              </Link>
-            </div>
-          </Popover.Panel>
-        </Transition>
       </Popover>
     </div>
   );
