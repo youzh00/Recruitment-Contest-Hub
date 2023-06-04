@@ -61,8 +61,8 @@ public class WebSecurityConfig {
         http
                 .csrf().disable()
                 .cors().and()
-                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .authorizeHttpRequests()
                 .requestMatchers(
                         "/api/auth/**"

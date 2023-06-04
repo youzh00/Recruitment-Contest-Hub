@@ -35,16 +35,16 @@ public class JwtUtils {
 
     public ResponseCookie generateJwtCookie(UserDetailsImpl userPrincipal) {
         String jwt = generateTokenFromUsername(userPrincipal.getUsername());
-        return generateCookie("accessToken", jwt, "/");
+        return generateCookie(jwtCookie, jwt, "/");
     }
 
     public ResponseCookie generateJwtCookie(Person person) {
         String jwt = generateTokenFromUsername(person.getName());
-        return generateCookie("accessToken", jwt, "/");
+        return generateCookie(jwtCookie, jwt, "/");
     }
 
     public ResponseCookie generateRefreshJwtCookie(String refreshToken) {
-        return generateCookie("refreshToken", refreshToken, "/");
+        return generateCookie(jwtRefreshCookie, refreshToken, "/");
     }
 
     public String getJwtFromCookies(HttpServletRequest request) {
@@ -56,20 +56,22 @@ public class JwtUtils {
     }
 
     public ResponseCookie getCleanJwtCookie() {
-        return ResponseCookie.from(jwtCookie, null).path("/api").build();
+        return ResponseCookie.from(jwtCookie, "").path("/").maxAge(0).build();
     }
 
     public ResponseCookie getCleanJwtRefreshCookie() {
-        return ResponseCookie.from(jwtRefreshCookie, null).path("/api/auth/refreshtoken").build();
+        return ResponseCookie.from(jwtRefreshCookie, "").path("/").maxAge(0).build();
     }
 
     public String getUserNameFromJwtToken(String token) {
-        return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody().getSubject();
+        return Jwts.parser().setSigningKey(getSigningKey()).parseClaimsJws(token).getBody().getSubject();
     }
 
     public boolean validateJwtToken(String authToken) {
         try {
-            Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(authToken);
+            System.out.println(authToken + " authToken");
+            Jwts.parser().setSigningKey(getSigningKey()).parseClaimsJws(authToken);
+
             return true;
         } catch (SignatureException e) {
             logger.error("Invalid JWT signature: {}", e.getMessage());
