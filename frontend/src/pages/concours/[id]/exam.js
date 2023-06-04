@@ -1,31 +1,33 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React from "react";
-import { contest } from "./mockdata";
+import { contest, contests } from "../../../assets/mockdata";
 import NavBar from "@/components/NavBar";
 import Question from "@/components/Question";
 import dynamic from "next/dynamic";
 const Countdown = dynamic(() => import("react-countdown"), {
   ssr: false,
 });
+import getServerSidePropsasync from "@/utils/getUser";
+import { useRouter } from "next/router";
+
+export const getServerSideProps = getServerSidePropsasync;
 
 async function getContest(id) {
   const { data } = await axios.get(`http://localhost:5000/api/contests/${id}`);
   return data.contest;
 }
 
-export default function exam() {
-  //   const { data, isLoading } = useQuery({
-  //     queryKey: ["contest"],
-  //     queryFn: getContest,
-  //   });
-  console.log(contest);
+export default function exam({ user }) {
+  const router = useRouter();
+  const concour = contests.find((concour) => concour.id === router.query.id);
+
   return (
-    <div className=" pt-6 pb-16 sm:pb-24">
-      <NavBar />
+    <div className="pt-6 pb-16 sm:pb-24">
+      <NavBar user={user} />
 
       <div className="text-center">
-        <h1 className=" font-medium mt-10 tracking-tight text-gray-900 sm:text-xs md:text-2xl">
+        <h1 className="font-medium mt-10 tracking-tight text-gray-900 sm:text-xs md:text-2xl">
           <span className="block xl:inline">{contest.contestName}</span>
         </h1>
       </div>

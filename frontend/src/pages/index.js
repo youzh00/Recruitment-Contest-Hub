@@ -1,6 +1,10 @@
 import NavBar from "@/components/NavBar";
 
-export default function Home() {
+import getServerSidePropsasync from "@/utils/getUser";
+
+export const getServerSideProps = getServerSidePropsasync;
+
+export default function Home({ user }) {
   return (
     <div className="relative min-h-screen overflow-hidden bg-gray-50">
       <div
@@ -76,7 +80,7 @@ export default function Home() {
       </div>
 
       <div className="relative pt-6 pb-16 sm:pb-24">
-        <NavBar />
+        <NavBar user={user} />
 
         <main className="mx-auto mt-16 max-w-7xl px-4 sm:mt-24">
           <div className="text-center">

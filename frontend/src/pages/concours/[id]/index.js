@@ -1,39 +1,15 @@
 import NavBar from "@/components/NavBar";
 import axios from "axios";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
-const concour = {
-  id: 1,
-  schoolName: "INPT",
+import { contests } from "@/assets/mockdata";
 
-  deadline: "06/06/2023",
+import getServerSidePropsasync from "@/utils/getUser";
 
-  startingTime: "06/03/2023",
+export const getServerSideProps = getServerSidePropsasync;
 
-  duration: 1000 * 60 * 60 * 2,
-
-  contestName: "Concours d'entrée à l'INPT",
-
-  description: "Concours d'entrée à l'INPT",
-
-  type: "MASTER",
-  image: "https://picsum.photos/200/200",
-};
-
-// export const getServerSideProps = async ({ params }) => {
-//   const { id } = params;
-//   // const { data: concour } = await axios.get(
-//   //   `http://localhost:5000/api/contest/${id}`
-//   // );
-//   return {
-//     props: {
-//       // concour,
-//     }, // will be passed to the page component as props
-//   };'setSecondName' is declared but its value is never read.ts(6133)
-
-// };
-
-export default function Concour() {
+export default function Concour({ user }) {
   const [firstName, setFirstName] = useState("");
   const [secondName, setSecondName] = useState("");
   const [firstBac, setFirstBac] = useState("");
@@ -43,26 +19,39 @@ export default function Concour() {
   const [bacDoc, setBacDoc] = useState("");
   const [cinDoc, setCinDoc] = useState("");
 
+  // get param id from url next router
+  const router = useRouter();
+
+  const concour = contests.find((concour) => concour.id === router.query.id);
+
   async function handleRegister(e) {
     e.preventDefault();
     const data = await axios.post(
-      "http://localhost:5000/api/contest/{id}/registrations",
+      `http://localhost:5000/api/contests/${router.query.id}/registrations`,
       {
+        firstName,
+        secondName,
         firstBacGrade: firstBac,
         secondBacGrade: secondBac,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
       }
     );
   }
   return (
     <div className="relative pt-6 pb-16 sm:pb-24">
-      <NavBar />
+      <NavBar user={user} />
       <div className="text-center">
         <h1 className=" font-medium mt-10 tracking-tight text-gray-900 sm:text-xs md:text-2xl">
-          <span className="block xl:inline">{concour.contestName}</span>
+          <span className="block xl:inline">{concour?.contestName}</span>
         </h1>
       </div>
       <div className="container mx-auto mt-16 px-48">
-        <form className="space-y-6" action="#" method="POST">
+        <form className="space-y-6" onSubmit={handleRegister}>
           <div className="px-4 py-5 sm:p-6">
             <div className="md:grid md:grid-cols-3 md:gap-6">
               <div className="md:col-span-1">
@@ -148,7 +137,7 @@ export default function Concour() {
                       className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     />
                   </div>
-                  {concour.type === "MASTER" && (
+                  {concour?.type === "MASTER" && (
                     <>
                       <div className="col-span-6 sm:col-span-4">
                         <label
@@ -237,11 +226,7 @@ export default function Concour() {
                       id="file-input"
                       value={cinDoc}
                       onChange={(e) => setCinDoc(e.target.value)}
-                      className="block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-white dark:border-gray-300 dark:text-gray-800
-    file:bg-transparent file:border-0
-    file:bg-gray-100 file:mr-4
-    file:py-3 file:px-4
-    dark:file:bg-indigo-600 dark:file:text-white"
+                      className="block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-white dark:border-gray-300 dark:text-gray-800 file:bg-transparent file:border-0 file:bg-gray-100 file:mr-4 file:py-3 file:px-4 dark:file:bg-indigo-600 dark:file:text-white"
                     />
                     <p
                       className="mt-1 text-sm text-gray-800 dark:text-gray-500"

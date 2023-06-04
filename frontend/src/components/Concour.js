@@ -18,14 +18,20 @@ const concour = {
   image: "https://picsum.photos/200/200",
 };
 
-export default function Concour({}) {
+export default function Concour({ concour }) {
   return (
     <Link
       href={`/concours/${concour.id}`}
       className="flex gap-8 overflow-hidden rounded-md bg-white p-6 shadow-[0_0_15px_2px_rgb(0,0,0,0.1)]"
     >
       <div>
-        <img className="h-52 rounded" src={concour.image} alt="concour image" />
+        <img
+          className="h-52 w-42 rounded"
+          width={208}
+          height={138}
+          src={concour.image}
+          alt="concour image"
+        />
       </div>
       <div className="flex-1 flex flex-col">
         <header className="flex items-center justify-start gap-5">
