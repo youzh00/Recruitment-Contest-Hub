@@ -23,6 +23,7 @@ export async function middleware(request) {
     return;
   }
 
+  console.log("verifiedAccessToken", verifiedAccessToken);
   if (!verifiedAccessToken) {
     return NextResponse.redirect(new URL("/login", request.url));
   }

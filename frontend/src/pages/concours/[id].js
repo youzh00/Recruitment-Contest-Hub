@@ -67,7 +67,7 @@ export default function Concour() {
                 <div className="grid grid-cols-6 gap-6">
                   <div className="col-span-6 sm:col-span-3">
                     <label
-                      forHtml="firstname"
+                      htmlFor="firstname"
                       className="block text-sm font-medium text-gray-700"
                     >
                       First Name
@@ -85,7 +85,7 @@ export default function Concour() {
                   </div>
                   <div className="col-span-6 sm:col-span-3">
                     <label
-                      forHtml="secondname"
+                      htmlFor="secondname"
                       className="block text-sm font-medium text-gray-700"
                     >
                       Second Name
@@ -103,7 +103,7 @@ export default function Concour() {
                   </div>
                   <div className="col-span-6 sm:col-span-3">
                     <label
-                      forHtml="2nd"
+                      htmlFor="2nd"
                       className="block text-sm font-medium text-gray-700"
                     >
                       2nd year baccalaureate mark
@@ -122,7 +122,7 @@ export default function Concour() {
 
                   <div className="col-span-6 sm:col-span-3">
                     <label
-                      forHtml="1st"
+                      htmlFor="1st"
                       className="block text-sm font-medium text-gray-700"
                     >
                       1st year baccalaureate mark
@@ -142,7 +142,7 @@ export default function Concour() {
                     <>
                       <div className="col-span-6 sm:col-span-4">
                         <label
-                          forHtml="licentiate"
+                          htmlFor="licentiate"
                           className="block text-sm font-medium text-gray-700"
                         >
                           Average mark of licentiate
@@ -160,7 +160,7 @@ export default function Concour() {
                       </div>
                       <div className="col-span-6 ">
                         <label
-                          forHtml="file-input"
+                          htmlFor="file-input"
                           className="block text-sm font-medium text-gray-700 mb-1"
                         >
                           Licentiate Document
@@ -189,7 +189,7 @@ export default function Concour() {
 
                   <div className="col-span-6 ">
                     <label
-                      forHtml="file-input"
+                      htmlFor="file-input"
                       className="block text-sm font-medium text-gray-700 mb-1"
                     >
                       Baccalaureate Document
@@ -216,7 +216,7 @@ export default function Concour() {
 
                   <div className="col-span-6 ">
                     <label
-                      forHtml="file-input"
+                      htmlFor="file-input"
                       className="block text-sm font-medium text-gray-700 mb-1"
                     >
                       CIN Document

@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/utils/cn";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 const navigations = [
   { name: "Concours", href: "#" },
@@ -20,6 +21,8 @@ const userNavigations = [
 ];
 
 const NavBar = () => {
+  const router = useRouter();
+
   return (
     <div>
       <Popover>
@@ -105,8 +108,16 @@ const NavBar = () => {
                           onClick={async (e) => {
                             e.preventDefault();
                             await axios.post(
-                              "http://localhost:5000/api/auth/signout"
+                              "http://localhost:5000/api/auth/signout",
+                              null,
+                              {
+                                headers: {
+                                  "Content-Type": "application/json",
+                                },
+                                withCredentials: true,
+                              }
                             );
+                            router.push("/login");
                           }}
                           className={cn(
                             active ? "bg-gray-100" : "",
