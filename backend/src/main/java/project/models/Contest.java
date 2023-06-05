@@ -68,12 +68,6 @@ public class Contest extends BaseEntity {
     )
     private List<Question> questions = new ArrayList<>();
 
-    @OneToMany(
-            mappedBy = "contest",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    private List<DocType> requiredDocs = new ArrayList<>();
 
     @OneToMany(
             mappedBy = "contest",
@@ -81,6 +75,25 @@ public class Contest extends BaseEntity {
             orphanRemoval = true
     )
     private List<Result> results = new ArrayList<>();
+
+
+    public Contest(String schoolName, String contestName, String description, String deadline, String startingTime, String duration, ContestType type) {
+        this.schoolName = schoolName;
+        this.contestName = contestName;
+        this.description = description;
+        this.deadline = deadline;
+        this.startingTime = startingTime;
+        this.duration = duration;
+        this.type = type;
+    }
+
+    public void setDocTypesAndQuestions(List<DocType> docTypes, List<Question> questions) {
+        this.docTypes.clear();
+        this.docTypes.addAll(docTypes);
+        this.questions.clear();
+        this.questions.addAll(questions);
+    }
+
 
     public enum ContestType {
         MASTER, DOCTORA, PREPARTOIRE

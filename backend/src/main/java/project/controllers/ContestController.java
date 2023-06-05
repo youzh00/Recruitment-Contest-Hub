@@ -13,6 +13,7 @@ import project.services.ContestService;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 @RestController
 @RequestMapping("/api/contests")
 public class ContestController {
@@ -27,6 +28,7 @@ public class ContestController {
     @PostMapping
     public ResponseEntity<Contest> createContest(@Valid @RequestBody Contest contest) {
         Contest savedContest = contestService.createContest(contest);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(savedContest);
     }
 

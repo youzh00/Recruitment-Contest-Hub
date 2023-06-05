@@ -26,8 +26,14 @@ public class ContestService {
     }
 
     public Contest createContest(Contest contest) {
+        Contest newContest = new Contest(contest.getSchoolName(), contest.getContestName(), contest.getDescription(), contest.getDeadline(), contest.getStartingTime(), contest.getDuration(), contest.getType());
+        newContest.setQuestions(contest.getQuestions());
+        newContest.setDocTypes(contest.getDocTypes());
 
-        return contestRepository.save(contest);
+        newContest.getQuestions().forEach(question -> question.setContest(newContest));
+        newContest.getDocTypes().forEach(docType -> docType.setContest(newContest));
+
+        return contestRepository.save(newContest);
     }
 
     public List<Contest> getContests() {
@@ -62,8 +68,11 @@ public class ContestService {
     public Registration registerPersonForContest(Long id, Registration registration) {
         Contest contest = contestRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Contest not found"));
         registration.setContest(contest);
-        registrationRepository.save(registration);
-        return registration;
+        registration.setPerson(registration.getPerson());
+        registration.setDocuments(registration.getDocuments());
+        registration.getDocuments().forEach(document -> document.setRegistration(registration));
+        return registrationRepository.save(registration);
+
     }
 
     public List<Question> getQuestionsForContest(Long id) {
@@ -73,6 +82,13 @@ public class ContestService {
     // getResultsForContest
     public List<Result> getResultsForContest(Long id) {
         return contestRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Contest not found")).getResults();
+    }
+
+    public List<Question> createQuestionsForContest(Long id, List<Question> questions) {
+        Contest contest = contestRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Contest not found"));
+        contest.setQuestions(questions);
+        contestRepository.save(contest);
+        return questions;
     }
 
 }

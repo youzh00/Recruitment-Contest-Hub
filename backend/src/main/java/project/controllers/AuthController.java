@@ -5,6 +5,7 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -153,6 +154,29 @@ public class AuthController {
                 .header(HttpHeaders.SET_COOKIE, jwtRefreshCookie.toString())
                 .body(new MessageResponse("You've been signed out!"));
     }
+
+    @GetMapping("/user")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public ResponseEntity<?> getUserInfo() {
+        Object principle = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (!Objects.equals(principle.toString(), "anonymousUser")) {
+            UserDetailsImpl userDetails = (UserDetailsImpl) principle;
+            List<String> roles = userDetails.getAuthorities().stream()
+                    .map(GrantedAuthority::getAuthority)
+                    .toList();
+
+            return ResponseEntity.ok(new UserInfoResponse(userDetails.getId(),
+                    userDetails.getUsername(),
+                    userDetails.getEmail(),
+                    userDetails.getMobileNumber(),
+                    userDetails.getCin(),
+                    userDetails.getBirthDay(),
+                    roles));
+        }
+
+        return ResponseEntity.badRequest().body(new MessageResponse("Error: User is not logged in!"));
+    }
+
 
     @PostMapping("/refreshtoken")
     public ResponseEntity<?> refreshtoken(HttpServletRequest request) {
