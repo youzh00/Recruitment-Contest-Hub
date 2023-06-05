@@ -27,6 +27,7 @@ public class ContestController {
 
     @PostMapping
     public ResponseEntity<Contest> createContest(@Valid @RequestBody Contest contest) {
+        System.out.println(contest);
         Contest savedContest = contestService.createContest(contest);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(savedContest);
