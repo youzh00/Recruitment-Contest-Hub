@@ -1,13 +1,10 @@
-const sides = [
-  { id: null, name: "None" },
-  { id: 1, name: "Baked beans" },
-  { id: 2, name: "Coleslaw" },
-  { id: 3, name: "French fries" },
-  { id: 4, name: "Garden salad" },
-  { id: 5, name: "Mashed potatoes" },
-];
-
-export default function Question({ question, options, index }) {
+export default function Question({
+  question,
+  options,
+  idx,
+  selectedOptions,
+  setSelectedOptions,
+}) {
   return (
     <div className="mt-10">
       <div className="relative">
@@ -16,7 +13,7 @@ export default function Question({ question, options, index }) {
         </div>
         <div className="relative flex justify-center">
           <span className="bg-white px-2 text-sm font-bold text-gray-500">
-            Question {index}
+            Question {idx}
           </span>
         </div>
       </div>
@@ -39,9 +36,16 @@ export default function Question({ question, options, index }) {
               <div className="ml-3 flex h-5 items-center">
                 <input
                   id={`side-${option.optionText}`}
-                  name="plan"
+                  name={question}
                   type="radio"
                   defaultChecked={false}
+                  onChange={(e) => {
+                    setSelectedOptions((prev) => {
+                      const newSelectedOptions = [...prev];
+                      newSelectedOptions[idx - 1] = sideIdx;
+                      return newSelectedOptions;
+                    });
+                  }}
                   className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
                 />
               </div>

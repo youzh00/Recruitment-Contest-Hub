@@ -26,21 +26,31 @@ export default function Concour({ user }) {
 
   async function handleRegister(e) {
     e.preventDefault();
-    const data = await axios.post(
-      `http://localhost:5000/api/contests/${router.query.id}/registrations`,
-      {
-        firstName,
-        secondName,
-        firstBacGrade: firstBac,
-        secondBacGrade: secondBac,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-      }
-    );
+    // const data = await axios.post(
+    //   `http://localhost:5000/api/contests/${router.query.id}/registrations`,
+    //   {
+    //     firstName,
+    //     secondName,
+    //     firstBacGrade: firstBac,
+    //     secondBacGrade: secondBac,
+    //     person: user,
+    //     contest: concour,
+    //     documents: [
+    //       {
+    //         docLink:
+    //           "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+    //         docType: "BACCALAUREATE",
+    //       },
+    //     ],
+    //   },
+    //   {
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     withCredentials: true,
+    //   }
+    // );
+    router.push(`/concours/${router.query.id}/exam`);
   }
   return (
     <div className="relative pt-6 pb-16 sm:pb-24">
@@ -112,7 +122,7 @@ export default function Concour({ user }) {
                       name="2nd"
                       id="2nd"
                       value={secondBac}
-                      onChange={(e) => setSecondBac(e.target.value)}
+                      onChange={(e) => setSecondBac(Number(e.target.value))}
                       pattern="^[0-9]{1,2}(\.[0-9]{1,2})?$"
                       required
                       className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
@@ -131,7 +141,7 @@ export default function Concour({ user }) {
                       name="1st"
                       id="1st"
                       value={firstBac}
-                      onChange={(e) => setFirstBac(e.target.value)}
+                      onChange={(e) => setFirstBac(Number(e.target.value))}
                       pattern="^[0-9]{1,2}(\.[0-9]{1,2})?$"
                       required
                       className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
